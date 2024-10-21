@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebSocket Client</title>
+  </head>
+  <body>
+    <h1>WebSocket Example</h1>
+    <button id="sendMessage">Send Message</button>
+
+    <script>
+      // Connect to the WebSocket server (ensure the group_id is a valid UUID).
+      const groupId = "1"; // Replace with an actual UUID
+      const ws = new WebSocket(`ws://172.19.158.240:3001/ws/${groupId}`);
+
+      // When the connection is opened
+      ws.onopen = function () {
+        console.log("Connected to WebSocket server.");
+      };
+
+      // When a message is received from the server
+      ws.onmessage = function (event) {
+        console.log("Message from server:", event.data);
+      };
+
+      // When the WebSocket connection is closed
+      ws.onclose = function (event) {
+        console.log("Disconnected from WebSocket server.");
+      };
+
+      // When there's an error with the WebSocket connection
+      ws.onerror = function (error) {
+        console.error("WebSocket Error:", error);
+      };
+
+      // Send a message to the WebSocket server
+      document.getElementById("sendMessage").onclick = function () {
+        ws.send("Hello from the browser!");
+        console.log("Message sent to server.");
+      };
+    </script>
+  </body>
+</html>
